@@ -15,6 +15,8 @@
 		149C45741A0F3213004FA05E /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 149C45721A0F3213004FA05E /* LaunchScreen.xib */; };
 		149C45801A0F3213004FA05E /* SlackAuthsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 149C457F1A0F3213004FA05E /* SlackAuthsTests.m */; };
 		149C458D1A0F3492004FA05E /* SlackAPISessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 149C458C1A0F3492004FA05E /* SlackAPISessionManager.m */; };
+		B1C12E8E1A1019D1005D3631 /* SlackRequestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C12E8D1A1019D1005D3631 /* SlackRequestViewController.m */; };
+		B1C12E911A101EC2005D3631 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C12E901A101EC2005D3631 /* LoginViewController.m */; };
 		D325AB4E0B0E4363AA7A1841 /* libPods-SlackAuths.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B691CFEE51C2445F9CEAF1EC /* libPods-SlackAuths.a */; };
 /* End PBXBuildFile section */
 
@@ -44,8 +46,13 @@
 		149C457F1A0F3213004FA05E /* SlackAuthsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SlackAuthsTests.m; sourceTree = "<group>"; };
 		149C458B1A0F3492004FA05E /* SlackAPISessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlackAPISessionManager.h; sourceTree = "<group>"; };
 		149C458C1A0F3492004FA05E /* SlackAPISessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlackAPISessionManager.m; sourceTree = "<group>"; };
+		9ECF7EDCAC60030AE85979E4 /* Pods-SlackAuths.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SlackAuths.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SlackAuths/Pods-SlackAuths.debug.xcconfig"; sourceTree = "<group>"; };
+		B1C12E8C1A1019D1005D3631 /* SlackRequestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlackRequestViewController.h; sourceTree = "<group>"; };
+		B1C12E8D1A1019D1005D3631 /* SlackRequestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlackRequestViewController.m; sourceTree = "<group>"; };
+		B1C12E8F1A101EC2005D3631 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		B1C12E901A101EC2005D3631 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		B691CFEE51C2445F9CEAF1EC /* libPods-SlackAuths.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SlackAuths.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		FAFE366E85FC418C9F676EA0 /* Pods-SlackAuths.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SlackAuths.xcconfig"; path = "Pods/Pods-SlackAuths.xcconfig"; sourceTree = "<group>"; };
+		E35369F639AB6B06BBF45E14 /* Pods-SlackAuths.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SlackAuths.release.xcconfig"; path = "Pods/Target Support Files/Pods-SlackAuths/Pods-SlackAuths.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,8 +80,8 @@
 				149C45621A0F3212004FA05E /* SlackAuths */,
 				149C457C1A0F3213004FA05E /* SlackAuthsTests */,
 				149C45611A0F3212004FA05E /* Products */,
-				FAFE366E85FC418C9F676EA0 /* Pods-SlackAuths.xcconfig */,
 				6FD7AEE0DE9F4F5CBBBA540A /* Frameworks */,
+				36CDA6F6562BE41F090463F1 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -127,6 +134,10 @@
 			isa = PBXGroup;
 			children = (
 				149C456D1A0F3213004FA05E /* Main.storyboard */,
+				B1C12E8F1A101EC2005D3631 /* LoginViewController.h */,
+				B1C12E901A101EC2005D3631 /* LoginViewController.m */,
+				B1C12E8C1A1019D1005D3631 /* SlackRequestViewController.h */,
+				B1C12E8D1A1019D1005D3631 /* SlackRequestViewController.m */,
 				149C45701A0F3213004FA05E /* Images.xcassets */,
 				149C45721A0F3213004FA05E /* LaunchScreen.xib */,
 			);
@@ -144,6 +155,15 @@
 				149C456B1A0F3213004FA05E /* ViewController.m */,
 			);
 			name = Controllers;
+			sourceTree = "<group>";
+		};
+		36CDA6F6562BE41F090463F1 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				9ECF7EDCAC60030AE85979E4 /* Pods-SlackAuths.debug.xcconfig */,
+				E35369F639AB6B06BBF45E14 /* Pods-SlackAuths.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		6FD7AEE0DE9F4F5CBBBA540A /* Frameworks */ = {
@@ -279,7 +299,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-SlackAuths-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SlackAuths/Pods-SlackAuths-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -290,6 +310,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				149C456C1A0F3213004FA05E /* ViewController.m in Sources */,
+				B1C12E8E1A1019D1005D3631 /* SlackRequestViewController.m in Sources */,
+				B1C12E911A101EC2005D3631 /* LoginViewController.m in Sources */,
 				149C45691A0F3213004FA05E /* AppDelegate.m in Sources */,
 				149C458D1A0F3492004FA05E /* SlackAPISessionManager.m in Sources */,
 				149C45661A0F3213004FA05E /* main.m in Sources */,
@@ -368,7 +390,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -403,7 +425,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -412,10 +434,11 @@
 		};
 		149C45841A0F3213004FA05E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FAFE366E85FC418C9F676EA0 /* Pods-SlackAuths.xcconfig */;
+			baseConfigurationReference = 9ECF7EDCAC60030AE85979E4 /* Pods-SlackAuths.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = SlackAuths/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -423,10 +446,11 @@
 		};
 		149C45851A0F3213004FA05E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FAFE366E85FC418C9F676EA0 /* Pods-SlackAuths.xcconfig */;
+			baseConfigurationReference = E35369F639AB6B06BBF45E14 /* Pods-SlackAuths.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = SlackAuths/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

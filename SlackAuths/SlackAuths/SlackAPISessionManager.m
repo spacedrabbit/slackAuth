@@ -13,13 +13,11 @@
 
 static NSString * const kSlackClientID = @"2727337933.2963733646";
 static NSString * const kSlackClientTeam = @"T02MD9XTF";//@"Fall-2014";
-
 //static NSString * const kSlackRedirectURI = @"https://fis-fall-2014.slack.com";
-
 static NSString * const kSlackRedirectURI = @"myApp://redirectSlack.com";
 static NSString * const kSlackClientSecret = @"f08de1a24342e7683755d2080b7dd6a1";
-//static NSString * const kSlackAuthURI = @"https://slack.com/oauth/authorize";
-static NSString * const kSlackAuthURI = @"https://slack.com/api/api.test";
+static NSString * const kSlackAuthURI = @"https://slack.com/oauth/authorize";
+//static NSString * const kSlackAuthURI = @"https://slack.com/api/api.test";
 static NSString * const kSlackTokenURI = @"https://slack.com/api/oauth.access";
 static NSString * const kSlackAccountType =@"slack";
 
@@ -72,6 +70,8 @@ https://fis-fall-2014.slack.com/oauth/authorize/2969782734.2d7820f150
 +(void) createRequestForService:(NSString *)service withCompletion:(void(^)(BOOL))success{
     
     
+    
+    /*
     [[NXOAuth2AccountStore sharedStore] requestAccessToAccountWithType:@"slack" withPreparedAuthorizationURLHandler:^(NSURL *preparedURL) {
         
         UIWindow *baseWindow = [[[UIApplication sharedApplication] delegate] window];
@@ -97,6 +97,7 @@ https://fis-fall-2014.slack.com/oauth/authorize/2969782734.2d7820f150
         
         
     }];
+     */
 }
 
 

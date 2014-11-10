@@ -7,8 +7,8 @@
 //
 
 #import "AppDelegate.h"
-#import "SlackAPISessionManager.h"
-#import <NXOAuth2Client/NXOAuth2.h>
+
+
 
 @interface AppDelegate ()
 
@@ -19,15 +19,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    [SlackAPISessionManager initialize];
-    [SlackAPISessionManager createRequestForService:@"slack" withCompletion:^(BOOL success) {
-        if (success) {
-            NSLog(@"it was successful");
-        }else{
-            NSLog(@"not success");
-        }
-    }];
-
+    //AFOAuth2Client * slackAuthClient = [AFOAuth2Client clientWithBaseURL:[NSURL URLWithString:kSlackAuthURI] clientID:kSlackClientID secret:kSlackClientSecret];
+    //[slackAuthClient.requestSerializer setHTTPMethodsEncodingParametersInURI:[NSSet setWithObject:@"text/html"]];
     
     return YES;
 }

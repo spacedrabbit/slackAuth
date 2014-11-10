@@ -4,7 +4,10 @@
 target "SlackAuths" do
 
 pod 'AFNetworking'
+pod 'AFOAuth2Client', :git => 'git@github.com:mlwelles/AFOAuth2Client.git'
 pod 'NXOAuth2Client', '~> 1.2.8'
+pod 'AFJSONRPCClient'
+pod 'MBProgressHUD'
 
 end
 

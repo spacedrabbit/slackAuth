@@ -1,0 +1,8 @@
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#endif
+
+#import "Pods-SlackAuths-environment.h"
+#ifdef __OBJC__
+  #import <Security/Security.h>
+#endif /* __OBJC__*/

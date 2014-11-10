@@ -1,4 +1,6 @@
 PODS:
+  - AFJSONRPCClient (2.1.1):
+    - AFNetworking (~> 2.1)
   - AFNetworking (2.4.1):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
@@ -20,14 +22,27 @@ PODS:
   - AFNetworking/UIKit (2.4.1):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - AFOAuth2Client (0.1.1):
+    - AFNetworking (~> 2.0)
+  - MBProgressHUD (0.9)
   - NXOAuth2Client (1.2.8)
 
 DEPENDENCIES:
+  - AFJSONRPCClient
   - AFNetworking
+  - AFOAuth2Client (from `git@github.com:mlwelles/AFOAuth2Client.git`)
+  - MBProgressHUD
   - NXOAuth2Client (~> 1.2.8)
 
+EXTERNAL SOURCES:
+  AFOAuth2Client:
+    :git: git@github.com:mlwelles/AFOAuth2Client.git
+
 SPEC CHECKSUMS:
+  AFJSONRPCClient: 7f6c046122e0ad39ea3ed829664ecdf56edf86d0
   AFNetworking: 0aabc6fae66d6e5d039eeb21c315843c7aae51ab
+  AFOAuth2Client: 05536bd4175add72e7efcb6b749d4e9685ed02f7
+  MBProgressHUD: 2038dbcf3dce73215abed6001657043d53aa79a8
   NXOAuth2Client: fa81be68c9ce628202028ae037c9c92cfbb37865
 
-COCOAPODS: 0.33.1
+COCOAPODS: 0.34.4
