@@ -8,6 +8,26 @@
         <scene sceneID="ufC-wZ-h7g">
             <objects>
                 <viewController id="vXZ-lx-hvc" customClass="LoginViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="e2c-aK-Jtq"/>
+                        <viewControllerLayoutGuide type="bottom" id="hFW-Wg-hZw"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Aic-b2-CiR">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1f3-dl-3Ml">
+                                <rect key="frame" x="117" y="392" width="86" height="34"/>
+                                <state key="normal" title="Spotify!">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="sxO-mz-39p" kind="modal" id="b6K-Km-Fgu"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
                     <navigationItem key="navigationItem" title="glos" id="ngn-XI-mz6">
                         <barButtonItem key="rightBarButtonItem" title="Log In" id="CXn-V9-Kft">
                             <connections>
@@ -18,7 +38,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="114.66666666666667" y="33.133333333333333"/>
+            <point key="canvasLocation" x="114" y="33"/>
         </scene>
         <!--Slack Request View Controller-->
         <scene sceneID="ctG-gE-CCh">
@@ -45,7 +65,25 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q7k-xg-pNR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="523" y="33"/>
+            <point key="canvasLocation" x="588" y="-83"/>
+        </scene>
+        <!--Spotify Auth View Controller-->
+        <scene sceneID="ZVK-eG-fjh">
+            <objects>
+                <viewController id="sxO-mz-39p" customClass="SpotifyAuthViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Mzt-hs-WMK"/>
+                        <viewControllerLayoutGuide type="bottom" id="eOx-hg-Bh9"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="5yQ-xJ-RtS">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hxK-Gr-itD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="588" y="549"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="neB-kc-fIG">

@@ -42,6 +42,9 @@ static NSString * const kSlackAccountType =@"slack";
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor blueColor]];
     
+    // -- Move this to main implementation so that this segue doesnt happen at all
+    // -- for users that are logged in
+    
     if ( [AFOAuthCredential retrieveCredentialWithIdentifier:@"slack"] ) {
         NSLog(@"Saved Credentials Found");
     }else{
