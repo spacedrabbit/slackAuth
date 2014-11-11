@@ -1,19 +1,27 @@
-//
-//  SpotifyAuthViewController.m
-//  SlackAuths
-//
-//  Created by Louis Tur on 11/10/14.
-//  Copyright (c) 2014 Louis Tur. All rights reserved.
-//
-#import "AppDelegate.h"
-#import "SpotifyAuthViewController.h"
-#import <Spotify/Spotify.h>
+/**********************************************************************************
+ *
+ *
+ *      SpotifyAuthViewController.m
+ *      SlackAuths
+ *
+ *      Created by Louis Tur on 11/10/14.
+ *      Copyright (c) 2014 Louis Tur. All rights reserved.
+ *
+ *
+ *  Note: SpotifyAPI TOS requires that this not be handled in a UIWebView!
+ *
+ ***********************************************************************************/
 
-#import <Spotify/Spotify.h>
+#import "SpotifyAuthViewController.h"
 #import <AFNetworking/AFNetworking.h>
-#import <AFNetworking/UIWebView+AFNetworking.h>
 
 /*
+ Parse currently not needed/implemented. Able to use three-legged OAuth flow for authentication. 
+ See: 
+ 
+ Flow details: https://developer.spotify.com/web-api/authorization-guide/
+ How to add redirect URI to Project: https://developer.spotify.com/technologies/spotify-ios-sdk/tutorial/
+ (oh yea, be aware YOU NEED THE UIAPPLICATIONDELEGATE METHOD TO HANDLE THE RETURN FROM SAFARI!!)
  
  - must be GET request with headers set -
  GET /1/classes/Users/xOQ1BJGl3X HTTP/1.1
@@ -38,28 +46,26 @@
  "updatedAt": "2014-11-10T16:55:24.358Z"
  }
  
+ 
+ // -- (PARSE) spotifyGlos           --//
+ // -- https://api.parse.com/1/users --//
+ static NSString * const kParseApplicationID = @"5HQQuuB7Oo85wgcQuOElTPyy81aexHCttCSf5OIi";
+ static NSString * const kParseRESTKey = @"YkKRL42ZVIDPNrvFqLSIjoHSXA8p5t0SI4hfmSM3";
+
  */
-
-// -- (PARSE) spotifyGlos           --//
-// -- https://api.parse.com/1/users --//
-static NSString * const kParseApplicationID = @"5HQQuuB7Oo85wgcQuOElTPyy81aexHCttCSf5OIi";
-static NSString * const kParseRESTKey = @"YkKRL42ZVIDPNrvFqLSIjoHSXA8p5t0SI4hfmSM3";
-
 // -- (SPOTIFY) spotifyCreds --//
 static NSString * const kSpotifyAccountType =@"spotify";
 static NSString * const kSpotifyClientSecret = @"ea449fa4da8044ad8bcf67e58c30934a";
 static NSString * const kSpotifyClientID = @"b1888b168ab341f19b1b6a3e257f76d9";
 
 // -- (SPOTIFY) spotifyURIS --//
-//static NSString * const kSpotifyRedirectURI = @"https://api.parse.com/1/users/xOQ1BJGl3X";
 static NSString * const kSpotifyAuthURI = @"https://accounts.spotify.com/authorize";
-//static NSString * const kSpotifyTokenURI = @"https://slack.com/api/oauth.access";
 static NSString * const kSpotifyRedirectURI = @"glos://returnAfterAuth";
+
+// -- (SPOTIFY) Token       --//
 static NSString * kSpotifyToken=@"";
 
 @interface SpotifyAuthViewController () <UIApplicationDelegate>
-
-@property (strong, nonatomic) SPTAuth * spotifyAuthClient;
 
 @end
 
@@ -67,6 +73,8 @@ static NSString * kSpotifyToken=@"";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    // -- very important to set this delegation here! --//
     [[UIApplication sharedApplication] setDelegate:self];
     [SpotifyAuthViewController createAuthSessionForSpotify];
 }
@@ -76,79 +84,92 @@ static NSString * kSpotifyToken=@"";
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark //------------- Spotify Auth Methods ---------------//
+// needs refactoring & then track/artist/album calls //
 +(void) createAuthSessionForSpotify{
     
     AFURLSessionManager * urlSession = [[AFURLSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
     
-    NSNumber * hashKey = [NSNumber numberWithInteger:[[NSDate date] hash]];
+    //-- Oh you fancy? Maybe next release will have a basic hash --//
+    //NSNumber * hashKey = [NSNumber numberWithInteger:[[NSDate date] hash]];
+    //@"state"          :[hashKey stringValue], // --- maybe add if all else is working
     NSDictionary * jsonRequestParameters = @{ @"client_id"      :kSpotifyClientID,
                                               @"response_type"  :@"token",
                                               @"redirect_uri"   :[NSURL URLWithString:kSpotifyRedirectURI],
-                                              
                                               @"scope"          :@[@"streaming",@"user-read-private"],
                                               @"show_dialog"    :@"true"
                                              };
-    //@"state"          :[hashKey stringValue], // --- maybe add if all else is working
+    
     AFJSONRequestSerializer *jsonRequestWhyNot = [AFJSONRequestSerializer serializer];
     NSMutableURLRequest * spotifyRequest = [jsonRequestWhyNot requestWithMethod:@"GET"
                                                                       URLString:kSpotifyAuthURI
                                                                      parameters:jsonRequestParameters
                                                                        error:nil];
     
-    /*
-    //-- URL pre-3 leg: https://accounts.spotify.com/authorize?client_id=b1888b168ab341f19b1b6a3e257f76d9&scope=streaming%20user-library-read%20user-read-private%20user-read-email&redirect_uri=glos%3A%2F%2FreturnAfterAuth&download_prompt=true&response_type=code
-        
-        */
-    /*
-     //-- URL Post 3:https://accounts.spotify.com/authorize?client_id=b1888b168ab341f19b1b6a3e257f76d9&redirect_uri=glos%3A%2F%2Freturnafterauth&response_type=token&scope%5B%5D=streaming&scope%5B%5D=user-read-private&show_dialog=false&state=437359917
-     */
     NSURLSessionDataTask *dataTask = [urlSession dataTaskWithRequest:spotifyRequest completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
-        
-        NSLog(@"**** THE RESPONSE:\n\n %@", response);
-        
-        NSJSONSerialization * jsonObj = (NSJSONSerialization *)responseObject;
-        
+        /*
+        //NSLog(@"**** THE RESPONSE:\n\n %@", response);
         if ([NSJSONSerialization isValidJSONObject:responseObject]) {
-            NSLog(@"(AS*F){(ASF{)AS(UF{OASIYFO{ASIFY VALID JSON");
-            if ( jsonObj ) {
-                //
-            }
+            //NSLog(@"Went to DisneyLand, got JSON");
         }
-        NSLog(@"**** THe RESPONSEOBJECT: %@", jsonObj);
-        
+        //NSLog(@"**** THe RESPONSEOBJECT: %@", jsonObj);
+         */
         if (error) {
             NSLog(@"OH SHIT< ERRRORS: %@", error);
         }
-        
     }];
     [dataTask resume];
     
-    
-    [urlSession setDataTaskDidBecomeDownloadTaskBlock:^(NSURLSession *session, NSURLSessionDataTask *dataTask, NSURLSessionDownloadTask *downloadTask) {
-        NSLog(@"Did become download task");
-        
-    }];
-    
+    //-- this method is called on the NSURLSessionDelegate, which is set and handled by AFNetworking
     [urlSession setDataTaskDidReceiveResponseBlock:^NSURLSessionResponseDisposition(NSURLSession *session, NSURLSessionDataTask *dataTask, NSURLResponse *response) {
-        NSLog(@"Received some response");
-        NSLog(@"The response from in the delegate:\n\n %@" , response);
         
+        // this method is needed to detect a response after creating the NSURLSessionDataTask
+        // When the response is heard, we pass the appropriate authorization URL to Safari
         [[UIApplication sharedApplication] openURL:response.URL];
 
+        // lastly we allow this response to continue on by returning this enum value
         return NSURLSessionResponseAllow;
     }];
     
-    [urlSession setDataTaskDidReceiveDataBlock:^(NSURLSession *session, NSURLSessionDataTask *dataTask, NSData *data) {
-        NSLog(@"Data task received data");
-        NSLog(@"Data from in the delegate Method: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
-        NSLog(@"Additional Stuff? Is this the redirect? :\n\n ");
-        NSLog(@"The NSURLSession: %@", session);
-        NSLog(@"The Data task returned: %@", dataTask);
-        
-    }];
     
+    //-- example of a URLRequest URL: --//
+    /*
+     https://accounts.spotify.com/authorize?client_id=b1888b168ab341f19b1b6a3e257f76d9&scope=streaming%20user-library-read%20user-read-private%20user-read-email&redirect_uri=glos%3A%2F%2FreturnAfterAuth&download_prompt=true&response_type=code
+     */
     
-    
+    //-- OAuth2 Flow for Implicit Authorization --//
+    //-- the below were all used for diagnostic reasons, uncomment to see the flow in action.
+    /*
+     *  1) dataTask is launched
+     *      1a. app enters background and Safari opens
+     *  2) Safari loads with NSURLRequest containing kSpotifyAuthURL + @params
+     *      2a. The params are a dictionary of keys/values defined by
+     *          https://developer.spotify.com/web-api/authorization-guide/ (Implicit Auth Flow)
+     *  3) Authentication begins on https://accounts.spotify.com/authorize (kSpotifyAuthURL)
+     *      3a. User is given the choice of FB or User/Pass
+     *          i. User can auth or decline, active status is returned to App (implementation to handle
+     *             declined requests or expired tokens not in place... so don't try it!)
+     *      3b. On subsequent auth calls, users will be detected as "logged in" and just asked to
+     *          click on the Authorize button again (user/pass not needed)
+     *  4) The kSpotifyRedirectURL points back to this App with a JSON response containing the token
+     *  5) Token is stored for further API calls
+     *
+     */
+    /*
+     [urlSession setDataTaskDidReceiveDataBlock:^(NSURLSession *session, NSURLSessionDataTask *dataTask, NSData *data) {
+     NSLog(@"Data task received data");
+     NSLog(@"Data from in the delegate Method: %@", [NSJSONSerialization JSONObjectWithData:data options:0 error:nil]);
+     NSLog(@"Additional Stuff? Is this the redirect? :\n\n ");
+     NSLog(@"The NSURLSession: %@", session);
+     NSLog(@"The Data task returned: %@", dataTask);
+     
+     }];
+     
+     [urlSession setDataTaskDidBecomeDownloadTaskBlock:^(NSURLSession *session, NSURLSessionDataTask *dataTask, NSURLSessionDownloadTask *downloadTask) {
+     NSLog(@"Did become download task");
+     
+     }];
+     
     [urlSession setTaskWillPerformHTTPRedirectionBlock:^NSURLRequest *(NSURLSession *session, NSURLSessionTask *task, NSURLResponse *response, NSURLRequest *request) {
         //will do this at some point...
         
@@ -166,17 +187,31 @@ static NSString * kSpotifyToken=@"";
     }];
     [urlSession setTaskDidSendBodyDataBlock:^(NSURLSession *session, NSURLSessionTask *task, int64_t bytesSent, int64_t totalBytesSent, int64_t totalBytesExpectedToSend) {
         NSLog(@" Did send body data block");
-    }];
+    }];*/
     
 }
+-(void)createSessionTokenWithURL:(NSURL *)authResponseURL{
+    NSString *baseURLString = [authResponseURL absoluteString];
+    kSpotifyToken = [[baseURLString stringByReplacingOccurrencesOfString:@"glos://returnAfterAuth#access_token=" withString:@""] stringByReplacingOccurrencesOfString:@"&token_type=Bearer&expires_in=3600" withString:@""];
+    NSLog(@"Final token: %@", kSpotifyToken);
+}
 
+
+/**********************************************************************************
+ *
+ *                  UIApplication Delegate!
+ *
+ ***********************************************************************************/
+#pragma mark //------------------ UIApplication delegate ---------------------//
 -(BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation{
     
+    //-- this has to be added (and make this class a UIApplicationDelegate)
+    //-- In order to properly handle the redirect URL
     if ( [[url absoluteString] hasPrefix:kSpotifyRedirectURI]) {
         NSLog(@"%@", [url absoluteString]);
-        
+        [self createSessionTokenWithURL:url];
+       
     }
-
     return YES;
 }
 
